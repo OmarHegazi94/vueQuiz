@@ -11,7 +11,7 @@
         <b-list-group-item 
           v-for="(answer, index) in answers" :key="index"
           @click="selectAnswer(index)"
-          :class="[selectedIndex === index ? 'selected' : '']"
+          :class="answerClass(index)"
         >
         {{ answer }}
         </b-list-group-item>
@@ -94,6 +94,20 @@ export default {
       this.answerd = true;
 
       this.increment(isCorrect)
+    },
+    answerClass(index) {
+
+      let answerClass = ''
+
+      if(!this.answerd && this.selectedIndex === index) {
+        answerClass = 'selected'
+      } else if (this.answerd && this.correctIndex === index) {
+        answerClass = 'correct'
+      } else if (this.answerd && this.selectedIndex === index && this.correctIndex !== index) {
+        answerClass = 'incorrect'
+      }
+
+      return answerClass;
     }
   }
 };
@@ -121,6 +135,6 @@ export default {
   }
 
   .incorrect {
-    background-color: lightred;
+    background-color: red;
   }
 </style>
